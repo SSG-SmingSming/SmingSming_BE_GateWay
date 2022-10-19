@@ -1,0 +1,131 @@
+server:
+  port: 8000
+
+spring:
+  # application 정보 설정
+  application:
+    name: gateway-service
+  cloud:
+    config:
+      name: chat-server
+      profile: docker
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allow-credentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+      routes:
+        - id: chat-server
+          uri: lb://CHAT-SERVER
+          predicates:
+            - Path=/chat-server/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        - id: user-service-server
+          uri: lb://CHAT-SERVER
+          predicates:
+            - Path=/chat-server/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        # 로그인
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/login
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        # OAuth
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/oauth2/authorization/google**
+            - Method=POST, GET
+
+        # OAuth
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/login/oauth2/code/google**
+            - Method=POST, GET
+
+        # 회원 가입
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/user/signup
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+        # 닉네임 중복 체크
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/user/checknickname/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+        # 이메일 중복 체크
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/user/checkemail/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/auth/**
+            - Method=POST, GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/auth/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+        #            - AuthorizationHeaderFilter
+
+        - id: song-server
+          uri: lb://SONG-SERVER
+          predicates:
+            - Path=/song-server/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/song-server/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
