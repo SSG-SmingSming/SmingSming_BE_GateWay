@@ -7,7 +7,7 @@ spring:
     name: gateway-service
   cloud:
     config:
-      name: chat-server
+      name: gateway-server
       profile: docker
     gateway:
       default-filters:
