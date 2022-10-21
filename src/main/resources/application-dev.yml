@@ -7,8 +7,8 @@ spring:
     name: gateway-service
   cloud:
     config:
-      name: chat-server
-      profile: docker
+      name: gateway-server
+      profile: dev
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
