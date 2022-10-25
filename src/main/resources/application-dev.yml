@@ -32,13 +32,13 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
 
-        - id: user-service-server
-          uri: lb://CHAT-SERVER
+        - id: userservice-server
+          uri: lb://USERSERVICE-SERVER
           predicates:
-            - Path=/chat-server/**
+            - Path=/userservice-server/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+            - RewritePath=/userservice-server/(?<segment>.*), /$\{segment}
 
         # 로그인
         - id: user-server
