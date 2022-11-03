@@ -32,7 +32,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/chat-server/(?<segment>.*), /$\{segment}
 
-
         - id: song-server
           uri: lb://SONG-SERVER
           predicates:
