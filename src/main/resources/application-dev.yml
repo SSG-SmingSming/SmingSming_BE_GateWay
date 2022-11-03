@@ -15,7 +15,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:3000"
+            allowed-origin-patterns: "*"
             allow-credentials: true
             allowedMethods:
               - GET
@@ -31,6 +31,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/chat-server/(?<segment>.*), /$\{segment}
+
 
         - id: song-server
           uri: lb://SONG-SERVER
@@ -57,7 +58,7 @@ spring:
             - Path=/user-server/login
             - Method=POST
           filters:
-            - RemoveRequestHeader=Cookie
+            #            - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
 
         # OAuth
