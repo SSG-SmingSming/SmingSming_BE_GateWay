@@ -12,10 +12,12 @@ spring:
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
+      #        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origin-patterns: "*"
+            allowedOriginPatterns: "*"
             allow-credentials: true
             allowedMethods:
               - GET
