@@ -8,7 +8,7 @@ spring:
   cloud:
     config:
       name: gateway-server
-      profile: docker
+      profile: dev
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
@@ -32,13 +32,24 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
 
+
+        - id: song-server
+          uri: lb://SONG-SERVER
+          predicates:
+            - Path=/song-server/**
+            - Method=GET, POST, PUT, DELETE
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/song-server/(?<segment>.*), /$\{segment}
+        #            - AuthorizationHeaderFilter
+
         - id: user-service-server
           uri: lb://CHAT-SERVER
           predicates:
-            - Path=/chat-server/**
+            - Path=/user-service-server/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+            - RewritePath=/user-service-server/(?<segment>.*), /$\{segment}
 
         # 로그인
         - id: user-server
@@ -120,12 +131,4 @@ spring:
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
         #            - AuthorizationHeaderFilter
 
-        - id: song-server
-          uri: lb://SONG-SERVER
-          predicates:
-            - Path=/song-server/**
-            - Method=GET, POST, PUT, DELETE
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/song-server/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+6
