@@ -6,23 +6,25 @@ spring:
   application:
     name: gateway-service
   cloud:
-    config:
-      name: gateway-server
-      profile: dev
     gateway:
       default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origin-patterns: "*"
-            allow-credentials: true
+            allowed-origins:
+              - "http://localhost:3000"
+              - "http://3.35.94.116:3000"
+            allowedHeaders:
+              - "*"
             allowedMethods:
-              - GET
               - POST
+              - GET
               - PUT
-              - DELETE
+              - PATCH
               - OPTIONS
+              - DELETE
+            allow-credentials: true
       routes:
         - id: chat-server
           uri: lb://CHAT-SERVER

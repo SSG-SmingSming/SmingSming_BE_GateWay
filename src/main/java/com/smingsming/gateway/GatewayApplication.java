@@ -17,24 +17,24 @@ public class GatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
-
-	@Bean
-	@Order(-1)
-	public CorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedOriginPattern("*");
-		corsConfiguration.addAllowedMethod("*");
-		corsConfiguration.setAllowCredentials(true);
-		source.registerCorsConfiguration("/**", corsConfiguration);
-		return source;
-	}
-
-	@Bean
-	public CorsWebFilter corsWebFilter() {
-		return new CorsWebFilter(corsConfigurationSource());
-	}
-
+//
+//	@Bean
+//	@Order(-1)
+//	public CorsConfigurationSource corsConfigurationSource() {
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		CorsConfiguration corsConfiguration = new CorsConfiguration();
+//		corsConfiguration.addAllowedHeader("*");
+//		corsConfiguration.addAllowedOriginPattern("*");
+//		corsConfiguration.addAllowedMethod("*");
+//		corsConfiguration.setAllowCredentials(true);
+//		source.registerCorsConfiguration("/**", corsConfiguration);
+//		return source;
+//	}
+//
+//	@Bean
+//	public CorsWebFilter corsWebFilter() {
+//		return new CorsWebFilter(corsConfigurationSource());
+//	}
+//
 
 }
