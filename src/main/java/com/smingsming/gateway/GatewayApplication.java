@@ -23,7 +23,8 @@ public class GatewayApplication {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.addAllowedHeader("*");
-		corsConfiguration.addAllowedOriginPattern("*");
+		corsConfiguration.addAllowedOrigin("http://3.35.94.116:3000");
+//		corsConfiguration.addAllowedOriginPattern("*");
 		corsConfiguration.addAllowedMethod("*");
 		corsConfiguration.setAllowCredentials(true);
 		source.registerCorsConfiguration("/**", corsConfiguration);
