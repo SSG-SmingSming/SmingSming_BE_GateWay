@@ -17,24 +17,26 @@ public class GatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
-//
-//	@Bean
-//	@Order(-1)
-//	public CorsConfigurationSource corsConfigurationSource() {
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		CorsConfiguration corsConfiguration = new CorsConfiguration();
-//		corsConfiguration.addAllowedHeader("*");
+
+	@Bean
+	@Order(-1)
+	public CorsConfigurationSource corsConfigurationSource() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedHeader("*");
+		corsConfiguration.addAllowedOrigin("http://3.35.94.116:3000");
+		corsConfiguration.addAllowedOrigin("http://localhost:3000");
 //		corsConfiguration.addAllowedOriginPattern("*");
-//		corsConfiguration.addAllowedMethod("*");
-//		corsConfiguration.setAllowCredentials(true);
-//		source.registerCorsConfiguration("/**", corsConfiguration);
-//		return source;
-//	}
-//
-//	@Bean
-//	public CorsWebFilter corsWebFilter() {
-//		return new CorsWebFilter(corsConfigurationSource());
-//	}
-//
+		corsConfiguration.addAllowedMethod("*");
+		corsConfiguration.setAllowCredentials(true);
+		source.registerCorsConfiguration("/**", corsConfiguration);
+		return source;
+	}
+
+	@Bean
+	public CorsWebFilter corsWebFilter() {
+		return new CorsWebFilter(corsConfigurationSource());
+	}
+
 
 }
