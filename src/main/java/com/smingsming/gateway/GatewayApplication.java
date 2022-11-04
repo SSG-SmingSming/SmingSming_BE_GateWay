@@ -24,12 +24,12 @@ public class GatewayApplication {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.addAllowedHeader("*");
 		corsConfiguration.addAllowedOrigin("http://3.35.94.116:3000");
-//		corsConfiguration.addAllowedOriginPattern("*");
 		corsConfiguration.addAllowedMethod("*");
 		corsConfiguration.setAllowCredentials(true);
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
 	}
+
 
 //	@Order(-1)
 //		corsConfiguration.addAllowedOrigin("http://3.35.94.116:3000");
