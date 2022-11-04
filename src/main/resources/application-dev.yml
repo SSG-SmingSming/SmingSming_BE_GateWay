@@ -15,20 +15,19 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins:
-#            allowed-origins:
-              - "http://localhost:3000"
-              - "http://3.35.94.116:3000"
-            allowedHeaders:
-              - "*"
-            allowedMethods:
-              - POST
-              - GET
-              - PUT
-              - PATCH
-              - OPTIONS
-              - DELETE
             allow-credentials: true
+            allowed-origin-patterns:
+              - "*"
+            exposed-headers:
+              - "*"
+            allowed-headers:
+              - "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
       routes:
         - id: chat-server
           uri: lb://CHAT-SERVER
