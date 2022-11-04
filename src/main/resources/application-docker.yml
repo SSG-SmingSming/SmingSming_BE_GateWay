@@ -6,6 +6,9 @@ spring:
   application:
     name: gateway-service
   cloud:
+    config:
+      name: gateway-server
+      profile: docker
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
@@ -32,7 +35,7 @@ spring:
             - Path=/chat-server/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+            - RewritePath=/chat-server/(?<segment>.*), /$\{segment}
 
         - id: song-server
           uri: lb://SONG-SERVER
