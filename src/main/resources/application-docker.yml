@@ -5,6 +5,8 @@ spring:
   # application 정보 설정
   application:
     name: gateway-server
+  main:
+    web-application-type: reactive
   cloud:
     config:
       name: gateway-server
