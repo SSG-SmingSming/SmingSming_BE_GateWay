@@ -5,6 +5,8 @@ spring:
   # application 정보 설정
   application:
     name: gateway-server
+  main:
+    web-application-type: reactive
   cloud:
     config:
       name: gateway-server
@@ -45,7 +47,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/song-server/(?<segment>.*), /$\{segment}
-        #            - AuthorizationHeaderFilter
 
         - id: userservice-server
           uri: lb://USERSERVICE-SERVER
@@ -62,7 +63,6 @@ spring:
             - Path=/user-server/login
             - Method=POST
           filters:
-            #            - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
 
         # OAuth
@@ -88,6 +88,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
         # 닉네임 중복 체크
         - id: user-server
           uri: lb://USER-SERVER
@@ -97,6 +98,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
         # 이메일 중복 체크
         - id: user-server
           uri: lb://USER-SERVER
@@ -119,19 +121,8 @@ spring:
         - id: user-server
           uri: lb://USER-SERVER
           predicates:
-            - Path=/user-server/auth/**
-            - Method=GET
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
-
-        - id: user-server
-          uri: lb://USER-SERVER
-          predicates:
             - Path=/user-server/**
             - Method=GET, POST, PUT, DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-server/(?<segment>.*), /$\{segment}
-        #            - AuthorizationHeaderFilter
-
